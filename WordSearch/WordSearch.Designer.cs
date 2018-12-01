@@ -46,9 +46,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(422, 55);
+            this.dataGridView1.Location = new System.Drawing.Point(406, 55);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(290, 215);
+            this.dataGridView1.Size = new System.Drawing.Size(346, 221);
             this.dataGridView1.TabIndex = 20;
             // 
             // button2
@@ -66,7 +66,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 18;
-            this.button1.Text = "button1";
+            this.button1.Text = "Get Puzzle";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // listBox1
