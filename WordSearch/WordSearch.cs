@@ -42,6 +42,24 @@ namespace WordSearch
                     i++;
                 }
             }
+
+            for (int col = 0; col < puzzData.GetLength(1); col++)
+            {
+                dataGridView1.ColumnCount += 1;
+                dataGridView1.Columns[col].Width = 30;
+            }
+
+            for (int x = 0; x < puzzData.GetLength(0); x++)// array rows
+            {
+                string[] row = new string[puzzData.GetLength(1)];
+
+                for (int y = 0; y < puzzData.GetLength(1); y++)
+                {
+                    row[y] = puzzData[x, y].ToString();
+                }
+
+                dataGridView1.Rows.Add(row);
+            }
         }
 
         private void splitStrings(List<string> inputStrings)

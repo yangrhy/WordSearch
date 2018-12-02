@@ -47,9 +47,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(406, 55);
+            this.dataGridView1.Location = new System.Drawing.Point(370, 55);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(346, 221);
+            this.dataGridView1.Size = new System.Drawing.Size(449, 221);
             this.dataGridView1.TabIndex = 20;
             // 
             // button2
@@ -85,7 +85,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(509, 28);
+            this.label3.Location = new System.Drawing.Point(511, 28);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(121, 24);
             this.label3.TabIndex = 16;
@@ -148,9 +148,9 @@
             // 
             // listView1
             // 
-            this.listView1.Location = new System.Drawing.Point(306, 28);
+            this.listView1.Location = new System.Drawing.Point(710, 312);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(507, 295);
+            this.listView1.Size = new System.Drawing.Size(95, 74);
             this.listView1.TabIndex = 23;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
