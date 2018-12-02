@@ -53,6 +53,7 @@
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ColumnHeadersVisible = false;
+            this.dataGridView1.Enabled = false;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.dataGridView1.Location = new System.Drawing.Point(370, 55);
             this.dataGridView1.MultiSelect = false;
@@ -140,7 +141,7 @@
             this.exitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(869, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(928, 24);
             this.menuStrip1.TabIndex = 21;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -162,7 +163,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(254, 282);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(538, 128);
+            this.richTextBox1.Size = new System.Drawing.Size(662, 181);
             this.richTextBox1.TabIndex = 22;
             this.richTextBox1.Text = "";
             // 
@@ -172,7 +173,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::WordSearch.Properties.Resources.icpc;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(869, 422);
+            this.ClientSize = new System.Drawing.Size(928, 487);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.searchWordsButton);

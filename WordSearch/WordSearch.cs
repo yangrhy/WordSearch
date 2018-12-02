@@ -29,7 +29,7 @@ namespace WordSearch
         }
 
         // clear datagridview highlighted colors
-        private void clearDataGridView()
+        private void ClearDataGridViewColor()
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -40,19 +40,49 @@ namespace WordSearch
                 }
             }
         }
-        
-        // return true if word is found
-        private bool FindWord(string word, int index, int row, int col)
-        {
-            char[] wordChars = word.ToCharArray();
 
-            if (row == puzzData.GetLength(0))
+        // return true if word is found to left
+        private bool FindWordLeft(char[] wordChars, int index, int row, int col)
+        {
+            bool found = false;
+            string wordFound = string.Empty;
+
+            richTextBox1.Text += $"\n\tBefore While Loop row: {row} col: { col} index: {index} charLength = {wordChars.Length} wordFound: {wordFound} \n";
+
+            while (index < wordChars.Length)
             {
-                row = row % puzzData.GetLength(0);
+                if (puzzData[row, col] == wordChars[index])
+                {
+                    wordFound += wordChars[index];
+                    richTextBox1.Text += $"\n\t\tIn While Loop row: {row} col: { col} index: {index} charLength = {wordChars.Length} wordFound: {wordFound} \n";
+                    dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.LightGreen;
+                    found = true;
+                    //recursive call for the next letter
+                    if (col <= 0)
+                    {
+                        col = puzzData.GetLength(1);
+                    }
+                    FindWordLeft(wordChars, ++index, row, --col);
+                }
+                else if (puzzData[row, col] != wordChars[index])
+                {
+                    found = false;
+                    break;
+                }
             }
-            if (col == puzzData.GetLength(1))
+            richTextBox1.Text += $"\n\t\t\tExited Function row: {row} col: { col} index: {index}  wordFound: {wordFound}\n";
+
+            return found;
+        }
+        
+        // return true if word is found to right
+        private bool FindWordRight(char[] wordChars, int index, int row, int col)
+        {
+            bool found = false;
+
+            if (col >= puzzData.GetLength(0))
             {
-                col = col % puzzData.GetLength(1);
+                col = col % puzzData.GetLength(0);
             }
 
             while (index < wordChars.Length)
@@ -60,12 +90,17 @@ namespace WordSearch
                 if (puzzData[row, col] == wordChars[index])
                 {
                     dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.LightGreen;
-                    FindWord(word, ++index, row, ++col);
+                    found = true;
+                    //recursive call for the next letter
+                    FindWordRight(wordChars, ++index, row, ++col);
                 }
-                return true;
+                else if (puzzData[row, col] != wordChars[index])
+                {
+                    found = false;
+                    break;
+                }
             }
-           
-            return false;
+            return found;
         }
 
         // find if first char is in the puzzle
@@ -88,12 +123,12 @@ namespace WordSearch
         }
         
         // create word search puzzle
-        private void createTable(string puzzString)
+        private void CreateTable(string puzzString)
         {
             char[] puzzChars = puzzString.ToCharArray();
             puzzData = new char[numOfRows, numOfCols];
             int i = 0;
-            clearDataGridView();
+            ClearDataGridViewColor();
 
             for (int row = 0; row < numOfRows; row++)
             {
@@ -128,7 +163,7 @@ namespace WordSearch
             this.dataGridView1.ClearSelection();
         }
 
-        private void splitStrings(List<string> inputStrings)
+        private void SplitStrings(List<string> inputStrings)
         {
 
             string[] splitRowsCols = new string[2]; // string array to get num of rows and cols           
@@ -166,7 +201,7 @@ namespace WordSearch
 
             //stringsOfPuzzles.Add(puzzStringConc); // place concatenated string into stringOfPuzzles
 
-            createTable(puzzStringConc);
+            CreateTable(puzzStringConc);
 
             lineCount += numOfRows;
 
@@ -257,11 +292,14 @@ namespace WordSearch
 
         private void getPuzzleButton_Click(object sender, EventArgs e)
         {
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+
             wordSearchLabel.Text = "Word Search Puzzle #" + puzzleNumber;
-            splitStrings(inputStrings);
+            SplitStrings(inputStrings);
             textBox1.Text = numOfPuzzles.ToString();
             searchWordsButton.Enabled = true;
-            puzzleNumber++;
+            puzzleNumber++;            
         }
 
         private void WordSearch_Load(object sender, EventArgs e)
@@ -280,7 +318,7 @@ namespace WordSearch
         {
             List<Point> rowCol = new List<Point>();
             int index = 0;
-            clearDataGridView();
+            ClearDataGridViewColor();
 
             if (listBox1.SelectedIndex == -1)
             {
@@ -297,15 +335,16 @@ namespace WordSearch
                     rowCol.Add(p);                    
                 }
 
-                foreach(Point p in rowCol)
+                for (int i = 0; i < rowCol.Count; i++)
                 {
-                    if (FindWord(currentWord, index, p.row, p.col))
-                    {
-                        richTextBox1.Text += $"Word found at {p.row} {p.col}\n";
-                    }
-                }
-               
+                    //dataGridView1.Rows[rowCol[i].row].Cells[rowCol[i].col].Style.BackColor = Color.LightGreen;
+                    richTextBox1.Text += $"\nInside Function CALL row: {rowCol[i].row} col: { rowCol[i].col} index: {index} \n";
 
+                    if (FindWordLeft(wordChars, index, rowCol[i].row, rowCol[i].col))
+                    {
+                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1}\n";
+                    }
+                }            
             }
         }
     }
