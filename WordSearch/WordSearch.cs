@@ -40,7 +40,7 @@ namespace WordSearch
                 }
             }
         }
-
+        /*
         // find word at [row,col] where first char was found going to the right
         private bool findWordDown(string word, int row, int col)
         {
@@ -80,40 +80,38 @@ namespace WordSearch
         }
 
         // find word at [row,col] where first char was found going to the right
-        private bool findWordRight(string word, int row, int col)
+        private bool findWordRight(string word, int row, int col, int index)
         {
-            clearDataGridView();
+            //clearDataGridView();
             char[] wordChars = word.ToCharArray();
             string wordFound = string.Empty;
-            
-            for (int i = row; i < dataGridView1.RowCount; i++)
+            int i = row;
+
+            for (int j = col; j < wordChars.Length; j++)
             {
-                for (int j = col; j < dataGridView1.ColumnCount; j++)
+                if (wordChars[index] == puzzData[i, j])
                 {
-                    for (int a = 0; a < wordChars.Length; a++)
-                    {
-                        if (wordChars[a] == puzzData[i, j])
-                        {
-                            wordFound += wordChars[a];
-                            // highlights the cell if matches
-                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightGreen;
-                            
-                            if(wordFound == word)
-                            {
-                                return true;
-                            }
-                        }                        
-                    }
+                    wordFound += wordChars[index];
+                    // highlights the cell if matches
+                    dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightGreen;
+                    index++;
                 }
+                else
+                { return false; }
             }
- 
+
+            if (wordFound == word)
+            {
+                return true;
+            }
 
             return false;
         }
+        */
 
         // find if first char is in the puzzle
         // *** MAYBE SEND ROW/COL WITH WORD THEN CAN SEARCH FOR MULTIPLE SPOTS WHERE CHAR OCCURS****
-        private List<int> findFirstChar(string word)
+        private List<int> findChar(char letter, int row, int col)
         {
             char[] wordChars = word.ToCharArray();
             List<int> rowCol = new List<int>();
@@ -331,18 +329,30 @@ namespace WordSearch
             else
             {
                 string currentWord = listBox1.SelectedItem.ToString();
-                findFirstChar(currentWord);
-                foreach (int num in findFirstChar(currentWord))
+                char[] wordChars = currentWord.ToCharArray();
+                int row = 0;
+                int col = 0;
+                int i = 0;
+                while (i<wordChars.Length)
+                {
+                    findChar(wordChars[i], row, col);
+                    i++;
+                }
+                
+
+                /*
+                foreach (int num in findChar(currentWord))
                 {
                     rowCol.Add(num);
                 }
 
-                if(findWordRight(currentWord, rowCol[0], rowCol[1]))
+                if(findWordRight(currentWord, rowCol[0], rowCol[1], 0))
                 {
-                    richTextBox1.Text += $"Right {rowCol[0] + 1} {rowCol[1] + 1}";
+                    richTextBox1.Text += $"{currentWord} found at row: {rowCol[0] + 1} column: {rowCol[1] + 1} going right.";
                 }
 
-                richTextBox1.Text += findWordRight(currentWord, rowCol[0], rowCol[1]); // see if true or not
+                richTextBox1.Text += findWordRight(currentWord, rowCol[0], rowCol[1], 0); // see if true or not
+                */
             }
         }
     }
