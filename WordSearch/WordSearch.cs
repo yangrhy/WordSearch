@@ -412,19 +412,19 @@ namespace WordSearch
                 {
                     if (FindWordRight(wordChars, index, rowCol[i].row, rowCol[i].col))
                     {
-                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going RIGHT\n";
+                        richTextBox1.Text += $"{currentWord} found at Row: {rowCol[i].row + 1} Col: {rowCol[i].col + 1} going RIGHT\n";
                     }
                     if (FindWordLeft(wordChars, index, rowCol[i].row, rowCol[i].col))
                     {
-                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going LEFT\n";
+                        richTextBox1.Text += $"{currentWord} found at Row: {rowCol[i].row + 1} Col: {rowCol[i].col + 1} going LEFT\n";
                     }
                     if (FindWordUp(wordChars, index, rowCol[i].row, rowCol[i].col))
                     {
-                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going UP\n";
+                        richTextBox1.Text += $"{currentWord} found at Row: {rowCol[i].row + 1} Col: {rowCol[i].col + 1} going UP\n";
                     }
                     if (FindWordDown(wordChars, index, rowCol[i].row, rowCol[i].col))
                     {
-                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going DOWN\n";
+                        richTextBox1.Text += $"{currentWord} found at Row: {rowCol[i].row + 1} Col: {rowCol[i].col + 1} going DOWN\n";
                     }
                 }            
             }
