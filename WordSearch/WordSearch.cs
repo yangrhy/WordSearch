@@ -36,7 +36,6 @@ namespace WordSearch
                 foreach (DataGridViewColumn col in dataGridView1.Columns)
                 {
                     dataGridView1.Rows[row.Index].Cells[col.Index].Style.BackColor = Color.Empty;
-
                 }
             }
         }
@@ -46,13 +45,13 @@ namespace WordSearch
         {
             // check to see if row has gone out of bounds
             // if so then wrap back around by setting row back to 0
-            if (row >= puzzData.GetLength(0))
-            {
-                row = row % puzzData.GetLength(0);
-            }
-
+   
             while (index < wordChars.Length)
             {
+                if (row >= puzzData.GetLength(0))
+                {
+                    row = row % puzzData.GetLength(0);
+                }
                 if (puzzData[row, col] == wordChars[index])
                 {
                     dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.LightGreen;
@@ -61,12 +60,18 @@ namespace WordSearch
                 }
                 else if (puzzData[row, col] != wordChars[index])
                 {
-                    dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
-                    return false;
+                    if (dataGridView1.Rows[row].Cells[col].Style.BackColor == Color.LightGreen)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
+                        return false;
+                    }
                 }
-                return true;
             }
-            return false;
+            return true;
         }
 
         // return true if word is found searching up
@@ -88,12 +93,18 @@ namespace WordSearch
                 }
                 else if (puzzData[row, col] != wordChars[index])
                 {
-                    dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
-                    return false;
+                    if (dataGridView1.Rows[row].Cells[col].Style.BackColor == Color.LightGreen)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
+                        return false;
+                    }                    
                 }
-                return true;
             }
-            return false;
+            return true;
         }
 
         // return true if word is found to left
@@ -115,12 +126,18 @@ namespace WordSearch
                 }
                 else if (puzzData[row, col] != wordChars[index])
                 {
-                    dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
-                    return false;
+                    if (dataGridView1.Rows[row].Cells[col].Style.BackColor == Color.LightGreen)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
+                        return false;
+                    }
                 }
-                return true;
             }
-            return false;
+            return true;
         }
 
         // return true if word is found to the right
@@ -128,13 +145,14 @@ namespace WordSearch
         {
             // check to see if column has gone out of bounds
             // if so then wrap back around by setting column back to 0
-            if (col >= puzzData.GetLength(1))
-            {
-                col = col % puzzData.GetLength(1);
-            }
 
             while (index < wordChars.Length)
             {
+                if (col >= (puzzData.GetLength(1) - 1))
+                {
+                    col = col % puzzData.GetLength(1);
+                }
+
                 if (puzzData[row, col] == wordChars[index])
                 {
                     dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.LightGreen;
@@ -143,12 +161,18 @@ namespace WordSearch
                 }
                 else if (puzzData[row, col] != wordChars[index])
                 {
-                    dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
-                    return false;
+                    if (dataGridView1.Rows[row].Cells[col].Style.BackColor == Color.LightGreen)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.Red;
+                        return false;
+                    }
                 }
-                return true;
             }
-            return false;
+            return true;
         }
 
         // find if first char is in the puzzle
@@ -377,7 +401,8 @@ namespace WordSearch
                 string currentWord = listBox1.SelectedItem.ToString();
                 char[] wordChars = currentWord.ToCharArray();
                 
-                
+                // get point for where the first char in word is found
+                // since there can be multiple places
                 foreach (Point p in FindFirstChar(wordChars[0]))
                 {
                     rowCol.Add(p);                    
@@ -385,11 +410,21 @@ namespace WordSearch
 
                 for (int i = 0; i < rowCol.Count; i++)
                 {
-                    richTextBox1.Text += $"\nBefore Function CALL row: {rowCol[i].row} col: { rowCol[i].col} index: {index} \n";
-
+                    if (FindWordRight(wordChars, index, rowCol[i].row, rowCol[i].col))
+                    {
+                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going RIGHT\n";
+                    }
+                    if (FindWordLeft(wordChars, index, rowCol[i].row, rowCol[i].col))
+                    {
+                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going LEFT\n";
+                    }
+                    if (FindWordUp(wordChars, index, rowCol[i].row, rowCol[i].col))
+                    {
+                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going UP\n";
+                    }
                     if (FindWordDown(wordChars, index, rowCol[i].row, rowCol[i].col))
                     {
-                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1}\n";
+                        richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1} going DOWN\n";
                     }
                 }            
             }
