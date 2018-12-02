@@ -151,35 +151,6 @@ namespace WordSearch
             return false;
         }
 
-        /*
-        // return true if word is found to right
-        private bool FindWordRight(char[] wordChars, int index, int row, int col)
-        {
-            bool found = false;
-
-            if (col >= puzzData.GetLength(0))
-            {
-                col = col % puzzData.GetLength(0);
-            }
-
-            while (index < wordChars.Length)
-            {
-                if (puzzData[row, col] == wordChars[index])
-                {
-                    dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.LightGreen;
-                    found = true;
-                    //recursive call for the next letter
-                    FindWordRight(wordChars, ++index, row, ++col);
-                }
-                else if (puzzData[row, col] != wordChars[index])
-                {
-                    found = false;
-                    break;
-                }
-            }
-            return found;
-        } */
-
         // find if first char is in the puzzle
         private List<Point> FindFirstChar(char letter)
         {
@@ -416,7 +387,7 @@ namespace WordSearch
                 {
                     richTextBox1.Text += $"\nBefore Function CALL row: {rowCol[i].row} col: { rowCol[i].col} index: {index} \n";
 
-                    if (FindWordLeft(wordChars, index, rowCol[i].row, rowCol[i].col))
+                    if (FindWordDown(wordChars, index, rowCol[i].row, rowCol[i].col))
                     {
                         richTextBox1.Text += $"{currentWord} found at {rowCol[i].row + 1} {rowCol[i].col + 1}\n";
                     }
