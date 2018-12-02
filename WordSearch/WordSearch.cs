@@ -28,6 +28,19 @@ namespace WordSearch
             InitializeComponent();
         }
 
+        // clear datagridview highlighted colors
+        private void clearDataGridView()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                foreach (DataGridViewColumn col in dataGridView1.Columns)
+                {
+                    dataGridView1.Rows[row.Index].Cells[col.Index].Style.BackColor = Color.Empty;
+
+                }
+            }
+        }
+
         // find word at [row,col] where first char was found going to the right
         private bool findWordDown(string word, int row, int col)
         {
@@ -45,19 +58,17 @@ namespace WordSearch
         // find word at [row,col] where first char was found going to the right
         private bool findWordLeft(string word, int row, int col)
         {
-
-            return false;
-        }
-
-        // find word at [row,col] where first char was found going to the right
-        private bool findWordRight(string word, int row, int col)
-        {
             char[] wordChars = word.ToCharArray();
             int a = 0;
-            for (int i = row; i < dataGridView1.RowCount; i++)
+            for (int i = row; i < dataGridView1.RowCount; i--)
             {
                 for (int j = col; j < dataGridView1.ColumnCount; j++)
                 {
+                    if( i == 0)
+                    {
+                        i = dataGridView1.RowCount;
+                    }
+
                     if (wordChars[a] == puzzData[i, j])
                     {
                         a++;
@@ -65,11 +76,43 @@ namespace WordSearch
                     return true;
                 }
             }
+            return false;
+        }
+
+        // find word at [row,col] where first char was found going to the right
+        private bool findWordRight(string word, int row, int col)
+        {
+            clearDataGridView();
+            char[] wordChars = word.ToCharArray();
+            string wordFound = string.Empty;
+            
+            for (int i = row; i < dataGridView1.RowCount; i++)
+            {
+                for (int j = col; j < dataGridView1.ColumnCount; j++)
+                {
+                    for (int a = 0; a < wordChars.Length; a++)
+                    {
+                        if (wordChars[a] == puzzData[i, j])
+                        {
+                            wordFound += wordChars[a];
+                            // highlights the cell if matches
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightGreen;
+                            
+                            if(wordFound == word)
+                            {
+                                return true;
+                            }
+                        }                        
+                    }
+                }
+            }
+ 
 
             return false;
         }
 
         // find if first char is in the puzzle
+        // *** MAYBE SEND ROW/COL WITH WORD THEN CAN SEARCH FOR MULTIPLE SPOTS WHERE CHAR OCCURS****
         private List<int> findFirstChar(string word)
         {
             char[] wordChars = word.ToCharArray();
@@ -95,8 +138,7 @@ namespace WordSearch
             char[] puzzChars = puzzString.ToCharArray();
             puzzData = new char[numOfRows, numOfCols];
             int i = 0;
-            dataGridView1.Columns.Clear();
-            dataGridView1.Rows.Clear();
+            clearDataGridView();
 
             for (int row = 0; row < numOfRows; row++)
             {
@@ -297,10 +339,10 @@ namespace WordSearch
 
                 if(findWordRight(currentWord, rowCol[0], rowCol[1]))
                 {
-                    richTextBox1.Text += $"R {rowCol[0] + 1} {rowCol[1] + 1}";
+                    richTextBox1.Text += $"Right {rowCol[0] + 1} {rowCol[1] + 1}";
                 }
 
-                richTextBox1.Text += findWordRight(currentWord, rowCol[0], rowCol[1]);
+                richTextBox1.Text += findWordRight(currentWord, rowCol[0], rowCol[1]); // see if true or not
             }
         }
     }
