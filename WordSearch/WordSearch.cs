@@ -20,36 +20,103 @@ namespace WordSearch
         private int numOfRows = 0; // get num of rows to make grid with
         private int numOfCols = 0; // get num of cols to make grid with
         private int lineCount = 1; // keep count of what index currently at in inputStrings
+        private int puzzleNumber = 1;
+        char[,] puzzData = new char[0, 0];
 
         public WordSearch()
         {
             InitializeComponent();
         }
 
+        // find word at [row,col] where first char was found going to the right
+        private bool findWordDown(string word, int row, int col)
+        {
+
+            return false;
+        }
+
+        // find word at [row,col] where first char was found going to the right
+        private bool findWordUp(string word, int row, int col)
+        {
+
+            return false;
+        }
+
+        // find word at [row,col] where first char was found going to the right
+        private bool findWordLeft(string word, int row, int col)
+        {
+
+            return false;
+        }
+
+        // find word at [row,col] where first char was found going to the right
+        private bool findWordRight(string word, int row, int col)
+        {
+            char[] wordChars = word.ToCharArray();
+            int a = 0;
+            for (int i = row; i < dataGridView1.RowCount; i++)
+            {
+                for (int j = col; j < dataGridView1.ColumnCount; j++)
+                {
+                    if (wordChars[a] == puzzData[i, j])
+                    {
+                        a++;
+                    }
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // find if first char is in the puzzle
+        private List<int> findFirstChar(string word)
+        {
+            char[] wordChars = word.ToCharArray();
+            List<int> rowCol = new List<int>();
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                for (int j = 0; j < dataGridView1.ColumnCount; j++)
+                {
+                    if (wordChars[0] == puzzData[i, j])
+                    {
+                        rowCol.Add(i);
+                        rowCol.Add(j);
+                        return rowCol;
+                    }
+                }
+            }
+            return rowCol;
+        }
+        
+        // create word search puzzle
         private void createTable(string puzzString)
         {
             char[] puzzChars = puzzString.ToCharArray();
-            char[,] puzzData = new char[numOfRows, numOfCols];
+            puzzData = new char[numOfRows, numOfCols];
             int i = 0;
-            listView1.Clear();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
 
             for (int row = 0; row < numOfRows; row++)
             {
                 for (int col = 0; col < numOfCols; col++)
                 {
                     puzzData[row, col] = puzzChars[i];
-                    listView1.Items.Add(puzzData[row, col].ToString());
                     i++;
                 }
             }
 
+            // create number of columns according to current puzzle
             for (int col = 0; col < puzzData.GetLength(1); col++)
             {
                 dataGridView1.ColumnCount += 1;
                 dataGridView1.Columns[col].Width = 30;
             }
 
-            for (int x = 0; x < puzzData.GetLength(0); x++)// array rows
+            // create number of columns according to current puzzle
+            // and insert char data into the puzzles
+            for (int x = 0; x < puzzData.GetLength(0); x++)
             {
                 string[] row = new string[puzzData.GetLength(1)];
 
@@ -60,6 +127,8 @@ namespace WordSearch
 
                 dataGridView1.Rows.Add(row);
             }
+
+            this.dataGridView1.ClearSelection();
         }
 
         private void splitStrings(List<string> inputStrings)
@@ -68,16 +137,7 @@ namespace WordSearch
             string[] splitRowsCols = new string[2]; // string array to get num of rows and cols           
             string puzzStringConc = string.Empty;
             List<string> wordsToFind = new List<string>(); // list to hold words to find in word search puzzle
-
-            listBox1.Items.Add(numOfPuzzles);
-
-            // keep count of what index currently at in inputStrings with a variable set to 0
-            // get numOfPuzzles to know how many times to iterate, increment lineCount
-            // get num of columns and rows, increment lineCount
-            // num of rows = #, that # should indicate how many indexes to input string for puzzle (place into string for puzzles)
-            // next num is for num of words (place into list of int), increment lineCount
-            // get words and place strings into new list of words using lineCount
-            // repeat if anything else is left
+            listBox1.Items.Add(numOfPuzzles);           
 
             try
             {
@@ -92,9 +152,15 @@ namespace WordSearch
             }
             lineCount += 1;
 
-            numOfRows = int.Parse(splitRowsCols[0]);
-            numOfCols = int.Parse(splitRowsCols[1]);
-
+            try
+            {
+                numOfRows = int.Parse(splitRowsCols[0]);
+                numOfCols = int.Parse(splitRowsCols[1]);
+            }
+            catch
+            {
+                MessageBox.Show("An error has occured.");
+            }
             // get characters for crossword puzzle
             for (int i = lineCount; i < (lineCount + numOfRows); i++)
             {
@@ -121,7 +187,6 @@ namespace WordSearch
 
             lineCount += numWords;
 
-            richTextBox1.Text = "The Puzz Strings = " + puzzStringConc;
             listBox1.Items.Clear();
             foreach (string s in wordsToFind)
                 listBox1.Items.Add(s);
@@ -138,7 +203,7 @@ namespace WordSearch
         private void openTextFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult dialog;
-            string fileName;
+            string fileName;            
 
             // open text file of choice with dialog box
             using (OpenFileDialog openFile = new OpenFileDialog())
@@ -195,9 +260,48 @@ namespace WordSearch
 
         private void getPuzzleButton_Click(object sender, EventArgs e)
         {
-
+            wordSearchLabel.Text = "Word Search Puzzle #" + puzzleNumber;
             splitStrings(inputStrings);
             textBox1.Text = numOfPuzzles.ToString();
+            searchWordsButton.Enabled = true;
+            puzzleNumber++;
+        }
+
+        private void WordSearch_Load(object sender, EventArgs e)
+        {
+            searchWordsButton.Enabled = false;
+            this.dataGridView1.DefaultCellStyle.Font = new Font("Tahoma", 15);
+            this.dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void searchWordsButton_Click(object sender, EventArgs e)
+        {
+            List<int> rowCol = new List<int>();
+            if (listBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select a word to find.");
+            }
+            else
+            {
+                string currentWord = listBox1.SelectedItem.ToString();
+                findFirstChar(currentWord);
+                foreach (int num in findFirstChar(currentWord))
+                {
+                    rowCol.Add(num);
+                }
+
+                if(findWordRight(currentWord, rowCol[0], rowCol[1]))
+                {
+                    richTextBox1.Text += $"R {rowCol[0] + 1} {rowCol[1] + 1}";
+                }
+
+                richTextBox1.Text += findWordRight(currentWord, rowCol[0], rowCol[1]);
+            }
         }
     }
 }
