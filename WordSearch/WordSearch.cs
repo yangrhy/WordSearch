@@ -40,91 +40,44 @@ namespace WordSearch
                 }
             }
         }
-        /*
-        // find word at [row,col] where first char was found going to the right
-        private bool findWordDown(string word, int row, int col)
-        {
-
-            return false;
-        }
-
-        // find word at [row,col] where first char was found going to the right
-        private bool findWordUp(string word, int row, int col)
-        {
-
-            return false;
-        }
-
-        // find word at [row,col] where first char was found going to the right
-        private bool findWordLeft(string word, int row, int col)
+        
+        // return true if word is found
+        private bool FindWord(string word, int index, int row, int col)
         {
             char[] wordChars = word.ToCharArray();
-            int a = 0;
-            for (int i = row; i < dataGridView1.RowCount; i--)
-            {
-                for (int j = col; j < dataGridView1.ColumnCount; j++)
-                {
-                    if( i == 0)
-                    {
-                        i = dataGridView1.RowCount;
-                    }
 
-                    if (wordChars[a] == puzzData[i, j])
-                    {
-                        a++;
-                    }
-                    return true;
-                }
+            if (row == puzzData.GetLength(0))
+            {
+                row = row % puzzData.GetLength(0);
             }
-            return false;
-        }
-
-        // find word at [row,col] where first char was found going to the right
-        private bool findWordRight(string word, int row, int col, int index)
-        {
-            //clearDataGridView();
-            char[] wordChars = word.ToCharArray();
-            string wordFound = string.Empty;
-            int i = row;
-
-            for (int j = col; j < wordChars.Length; j++)
+            if (col == puzzData.GetLength(1))
             {
-                if (wordChars[index] == puzzData[i, j])
-                {
-                    wordFound += wordChars[index];
-                    // highlights the cell if matches
-                    dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.LightGreen;
-                    index++;
-                }
-                else
-                { return false; }
+                col = col % puzzData.GetLength(1);
             }
 
-            if (wordFound == word)
+            while (index < wordChars.Length)
             {
+                if (puzzData[row, col] == wordChars[index])
+                {
+                    dataGridView1.Rows[row].Cells[col].Style.BackColor = Color.LightGreen;
+                    FindWord(word, ++index, row, ++col);
+                }
                 return true;
             }
-
-            return false;
-        }
-        */
-        private bool wordSearch(char letter, int row, int col)
-        {
-
+           
             return false;
         }
 
         // find if first char is in the puzzle
-        private List<Point> findChar(string word)
+        private List<Point> FindFirstChar(char letter)
         {
-            char[] wordChars = word.ToCharArray();
             List<Point> rowCol = new List<Point>();
 
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 for (int j = 0; j < dataGridView1.ColumnCount; j++)
                 {
-                    if (wordChars[0] == puzzData[i, j])
+                    if (puzzData[i, j] == letter)
                     {
                         Point point = new Point(i,j);
                         rowCol.Add(point);
@@ -326,6 +279,9 @@ namespace WordSearch
         private void searchWordsButton_Click(object sender, EventArgs e)
         {
             List<Point> rowCol = new List<Point>();
+            int index = 0;
+            clearDataGridView();
+
             if (listBox1.SelectedIndex == -1)
             {
                 MessageBox.Show("Select a word to find.");
@@ -334,28 +290,22 @@ namespace WordSearch
             {
                 string currentWord = listBox1.SelectedItem.ToString();
                 char[] wordChars = currentWord.ToCharArray();
-                int row = 0;
-                int i = 0;
-
-                foreach (Point p in findChar(currentWord))
+                
+                
+                foreach (Point p in FindFirstChar(wordChars[0]))
                 {
-                    rowCol.Add(p);
-                    richTextBox1.Text += $"{p.row} {p.col}\n";
-                }        
-
-                /*
-                foreach (int num in findChar(currentWord))
-                {
-                    rowCol.Add(num);
+                    rowCol.Add(p);                    
                 }
 
-                if(findWordRight(currentWord, rowCol[0], rowCol[1], 0))
+                foreach(Point p in rowCol)
                 {
-                    richTextBox1.Text += $"{currentWord} found at row: {rowCol[0] + 1} column: {rowCol[1] + 1} going right.";
+                    if (FindWord(currentWord, index, p.row, p.col))
+                    {
+                        richTextBox1.Text += $"Word found at {p.row} {p.col}\n";
+                    }
                 }
+               
 
-                richTextBox1.Text += findWordRight(currentWord, rowCol[0], rowCol[1], 0); // see if true or not
-                */
             }
         }
     }
