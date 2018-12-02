@@ -15,21 +15,39 @@ namespace WordSearch
     {
         private StreamReader fileReader;
         private int numOfPuzzles = 0;
+        List<string> inputStrings = new List<string>(); // collection of strings from input file
         private List<string> stringsOfPuzzles = new List<string>(); // takes strings of puzzles to throw into a 2d char array
+        private int numOfRows = 0; // get num of rows to make grid with
+        private int numOfCols = 0; // get num of cols to make grid with
+        private int lineCount = 1; // keep count of what index currently at in inputStrings
 
         public WordSearch()
         {
             InitializeComponent();
         }
 
+        private void createTable(string puzzString)
+        {
+            char[] puzzChars = puzzString.ToCharArray();
+            char[,] puzzData = new char[numOfRows, numOfCols];
+            int i = 0;
+            listView1.Clear();
+
+            for (int row = 0; row < numOfRows; row++)
+            {
+                for (int col = 0; col < numOfCols; col++)
+                {
+                    puzzData[row, col] = puzzChars[i];
+                    listView1.Items.Add(puzzData[row, col].ToString());
+                    i++;
+                }
+            }
+        }
+
         private void splitStrings(List<string> inputStrings)
         {
-            numOfPuzzles = int.Parse(inputStrings[0]);
 
-            string[] splitRowsCols = new string[2]; // string array to get num of rows and cols
-            int numOfRows = 0;
-            int numOfCols = 0;
-            int lineCount = 1; // keep count of what index currently at in inputStrings
+            string[] splitRowsCols = new string[2]; // string array to get num of rows and cols           
             string puzzStringConc = string.Empty;
             List<string> wordsToFind = new List<string>(); // list to hold words to find in word search puzzle
 
@@ -43,72 +61,66 @@ namespace WordSearch
             // get words and place strings into new list of words using lineCount
             // repeat if anything else is left
 
-            while (numOfPuzzles > 0)
+            try
             {
-                richTextBox1.Text += "SPLIT HERE\t\n";
-
                 for (int i = lineCount; i < lineCount + 1; i++)
                 {
                     splitRowsCols = inputStrings[i].Split(' ');
                 }
-                lineCount += 1;
-                richTextBox1.Text += "ROWS" + splitRowsCols[0];
-                richTextBox1.Text += "Cols" + splitRowsCols[1];
-
-                numOfRows = int.Parse(splitRowsCols[0]);
-                numOfCols = int.Parse(splitRowsCols[1]);
-
-                listBox1.Items.Add(numOfRows);
-                listBox1.Items.Add(numOfCols);
-
-                // get characters for crossword puzzle
-                for (int i = lineCount; i < (lineCount + numOfRows); i++)
-                {
-                    puzzStringConc += string.Join("", inputStrings[i]);
-                }
-                stringsOfPuzzles.Add(puzzStringConc); // place concatenated string into stringOfPuzzles
-                lineCount += numOfRows;
-                // ***code good up to here***
-
-                string numOfWords = inputStrings[lineCount];
-                listBox1.Items.Add("This is num of words: " + numOfWords);
-                int numWords;
-                var getNumWords = int.TryParse(numOfWords, out numWords);
-
-                lineCount += 1;
-                // for loop to get string of words
-                for (int i = lineCount; i < lineCount + numWords; i++)
-                {
-                    wordsToFind.Add(inputStrings[i]);
-                }
-
-                foreach (string s in wordsToFind)
-                {
-                    richTextBox1.Text += s + " ";
-                }
-                lineCount += numWords;
-                listBox1.Items.Add("This is int NumWords" + numWords);
-                listBox1.Items.Add("This is int lineCount" + lineCount);
-
-                richTextBox1.Text += lineCount.ToString();
-
-                richTextBox1.Text += "The Puzz Strings = " + puzzStringConc;
-                listBox1.Items.Clear();
-                foreach (string s in wordsToFind)
-                    listBox1.Items.Add(s);
-
-                puzzStringConc = ""; // reset string to blank for next puzzle
-                numOfPuzzles--;
-                wordsToFind.Clear();
-                //**PUT NUM PUZZLES INTO OTHER FUNCTION THEN CALL THIS FUNCTION THAT MANY TIMES*****
             }
+            catch
+            {
+                MessageBox.Show("Error: No more puzzles");
+            }
+            lineCount += 1;
+
+            numOfRows = int.Parse(splitRowsCols[0]);
+            numOfCols = int.Parse(splitRowsCols[1]);
+
+            // get characters for crossword puzzle
+            for (int i = lineCount; i < (lineCount + numOfRows); i++)
+            {
+                puzzStringConc += string.Join("", inputStrings[i]);
+            }
+
+            //stringsOfPuzzles.Add(puzzStringConc); // place concatenated string into stringOfPuzzles
+
+            createTable(puzzStringConc);
+
+            lineCount += numOfRows;
+
+            string numOfWords = inputStrings[lineCount];
+
+            int numWords;
+            var getNumWords = int.TryParse(numOfWords, out numWords);
+
+            lineCount += 1;
+            // for loop to get string of words
+            for (int i = lineCount; i < lineCount + numWords; i++)
+            {
+                wordsToFind.Add(inputStrings[i]);
+            }
+
+            lineCount += numWords;
+
+            richTextBox1.Text = "The Puzz Strings = " + puzzStringConc;
+            listBox1.Items.Clear();
+            foreach (string s in wordsToFind)
+                listBox1.Items.Add(s);
+
+            puzzStringConc = ""; // reset string to blank for next puzzle
+            wordsToFind.Clear(); // reset list of words to find for next puzzle
+
+            numOfPuzzles--;
+
+            if (numOfPuzzles < 1)
+                getPuzzleButton.Enabled = false;
         }
 
         private void openTextFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult dialog;
             string fileName;
-            List<string> inputStrings = new List<string>();
 
             // open text file of choice with dialog box
             using (OpenFileDialog openFile = new OpenFileDialog())
@@ -136,6 +148,8 @@ namespace WordSearch
 
                         // set file from where data is read
                         fileReader = new StreamReader(input);
+                        getPuzzleButton.Enabled = true;
+
                     }
                     catch (IOException exception)
                     {
@@ -151,13 +165,21 @@ namespace WordSearch
                 {
                     inputStrings.Add(input);
                 }
-                splitStrings(inputStrings);
+                numOfPuzzles = int.Parse(inputStrings[0]);
+                textBox1.Text = numOfPuzzles.ToString();
             }
             catch
             {
                 MessageBox.Show("Error Reading from File", "Error",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void getPuzzleButton_Click(object sender, EventArgs e)
+        {
+
+            splitStrings(inputStrings);
+            textBox1.Text = numOfPuzzles.ToString();
         }
     }
 }
