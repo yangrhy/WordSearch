@@ -108,23 +108,27 @@ namespace WordSearch
             return false;
         }
         */
+        private bool wordSearch(char letter, int row, int col)
+        {
+
+            return false;
+        }
 
         // find if first char is in the puzzle
-        // *** MAYBE SEND ROW/COL WITH WORD THEN CAN SEARCH FOR MULTIPLE SPOTS WHERE CHAR OCCURS****
-        private List<int> findChar(char letter, int row, int col)
+        private List<Point> findChar(string word)
         {
             char[] wordChars = word.ToCharArray();
-            List<int> rowCol = new List<int>();
+            List<Point> rowCol = new List<Point>();
+
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 for (int j = 0; j < dataGridView1.ColumnCount; j++)
                 {
                     if (wordChars[0] == puzzData[i, j])
                     {
-                        rowCol.Add(i);
-                        rowCol.Add(j);
-                        return rowCol;
-                    }
+                        Point point = new Point(i,j);
+                        rowCol.Add(point);
+                    }                   
                 }
             }
             return rowCol;
@@ -321,7 +325,7 @@ namespace WordSearch
 
         private void searchWordsButton_Click(object sender, EventArgs e)
         {
-            List<int> rowCol = new List<int>();
+            List<Point> rowCol = new List<Point>();
             if (listBox1.SelectedIndex == -1)
             {
                 MessageBox.Show("Select a word to find.");
@@ -331,14 +335,13 @@ namespace WordSearch
                 string currentWord = listBox1.SelectedItem.ToString();
                 char[] wordChars = currentWord.ToCharArray();
                 int row = 0;
-                int col = 0;
                 int i = 0;
-                while (i<wordChars.Length)
+
+                foreach (Point p in findChar(currentWord))
                 {
-                    findChar(wordChars[i], row, col);
-                    i++;
-                }
-                
+                    rowCol.Add(p);
+                    richTextBox1.Text += $"{p.row} {p.col}\n";
+                }        
 
                 /*
                 foreach (int num in findChar(currentWord))
