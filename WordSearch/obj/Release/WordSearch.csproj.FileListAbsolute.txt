@@ -1,0 +1,10 @@
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\bin\Release\WordSearch.exe.config
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\bin\Release\WordSearch.exe
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\bin\Release\WordSearch.pdb
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\obj\Release\WordSearch.WordSearch.resources
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\obj\Release\WordSearch.Properties.Resources.resources
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\obj\Release\WordSearch.csproj.GenerateResource.cache
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\obj\Release\WordSearch.csproj.CoreCompileInputs.cache
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\obj\Release\WordSearch.exe
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\obj\Release\WordSearch.pdb
+C:\Users\Huechi\source\repos\WordSearch\WordSearch\obj\Release\WordSearch.csprojAssemblyReference.cache
