@@ -28,18 +28,30 @@ This uses a recursive algorithm to search for the words. It starts at a point (w
 
 ### Select a word and click "Search Words"
 
-#### First puzzle results
+### First puzzle results
+#### WORD
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_word.JPG" width="80%" height="80%"/>
+
+#### SEARCH
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_search.JPG" width="80%" height="80%"/>
+
+#### KNIGHTRO
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_knightro.JPG" width="80%" height="80%"/>
+
+#### UNDERFUND
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_underfund.JPG" width="80%" height="80%"/>
+
+#### INGESTING
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_ingesting.JPG" width="80%" height="80%"/>
 
 ### Click "Get Puzzle" to get the next puzzle
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Puzzle2.JPG" width="80%" height="80%"/>
 
 ### Second puzzle results
+#### AGE
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_age.JPG" width="80%" height="80%"/>
+
+#### THETHETHETHETH
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_thethethetheth.JPG" width="80%" height="80%"/>
 
 As you can see above, "thethethetheth" can be found by wrapping around 4 times.
