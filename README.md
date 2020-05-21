@@ -15,33 +15,31 @@ This uses a recursive algorithm to search for the words. It starts at a point (w
 # Screenshots
 
 ### Upon Starting the Application
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Initial.JPG">
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Initial.JPG" width="80%" height="80%"/>
 
 ### Click "Open Text File" and open "ACM.txt"
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/textfile.jpg">
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/textfile.jpg" width="80%" height="80%"/>
 
 ### "Number of Puzzles" textbox should now have a value
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Num_puzzles.JPG">
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Num_puzzles.JPG" width="80%" height="80%"/>
 
 ### Clicking "Get Puzzle" button will deduct the "Number of Puzzles" and add "Words to Search" into the listbox
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Puzzle1_before.JPG">
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Puzzle1_before.JPG" width="80%" height="80%"/>
 
 ### Select a word and click "Search Words"
-#### Here are the results from the first puzzle:
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_word.JPG"/>
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_search.JPG"/>
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_knightro.JPG"/>
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_underfund.JPG"/>
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_ingesting.JPG"/>
 
-### Click "Open Text File" and open "ACM.txt"
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/textfile.jpg">
+#### First puzzle results
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_word.JPG" width="80%" height="80%"/>
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_search.JPG" width="80%" height="80%"/>
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_knightro.JPG" width="80%" height="80%"/>
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_underfund.JPG" width="80%" height="80%"/>
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_ingesting.JPG" width="80%" height="80%"/>
 
-### Click "Open Text File" and open "ACM.txt"
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/textfile.jpg">
+### Click "Get Puzzle" to get the next puzzle
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Puzzle2.JPG" width="80%" height="80%"/>
 
-### Click "Open Text File" and open "ACM.txt"
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/textfile.jpg">
+### Second puzzle results
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_age.JPG" width="80%" height="80%"/>
+<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_thethethetheth.JPG" width="80%" height="80%"/>
 
-### Click "Open Text File" and open "ACM.txt"
-<img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/textfile.jpg">
+As you can see above, "thethethetheth" can be found by wrapping around 4 times.
