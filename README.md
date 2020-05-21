@@ -54,4 +54,4 @@ This uses a recursive algorithm to search for the words. It starts at a point (w
 #### THETHETHETHETH
 <img src="https://github.com/yangrhy/WordSearch/blob/master/Screenshots/Search_thethethetheth.JPG" width="80%" height="80%"/>
 
-As you can see above, "thethethetheth" can be found by wrapping around 4 times.
+As you can see above, "THETHETHETHETH" can be found by wrapping around 4 times.
